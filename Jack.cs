@@ -1,8 +1,17 @@
 ﻿using System;
 
-public class Class1
+public class Jack : Card
 {
-	public Class1()
+    public static string rank = 11;
+    public string suit;
+    public static int damage = 2;
+    public Jack()
 	{
+
 	}
+
+    public void ability()
+    {
+
+    }
 }

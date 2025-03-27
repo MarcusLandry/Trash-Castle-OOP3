@@ -4,7 +4,11 @@ public class Deck
 {
 	public Card[] deckList;
 
-    public virtual void shuffle()
+	public Deck(Card[] deckList)
+	{
+
+	}
+    public void shuffle()
 	{
 	}
 

@@ -2,7 +2,16 @@
 
 public class Ace : Card
 {
-	public Ace()
+    public static string rank = 1;
+    public string suit;
+    public int damage;
+
+    public Ace()
 	{
 	}
+
+    public int ability()
+    {
+
+    }
 }
