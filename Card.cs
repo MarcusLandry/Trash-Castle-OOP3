@@ -34,6 +34,8 @@ using System.Collections.Generic;
         public string Name { get; protected set; }
         public bool IsSpecialCard { get; protected set; }
 
+        /* public int Damage {protected set;} */
+
         // Constructor
         protected Card(CardType type, Suit? suit, int? value)
         {
@@ -41,6 +43,16 @@ using System.Collections.Generic;
             CardSuit = suit;
             Value = value;
             IsSpecialCard = type != CardType.Number;
+
+           /*  Damage = 0;
+
+            if (Type == CardType.Number && Value.HasValue)
+            {
+                // According to game rules: lower cards (2-5) deal 2 damage, higher cards (6-10) deal 4 damage
+                Damage = Value.Value <= 5 ? 2 : 4;
+            } */
+
+
             GenerateName();
         }
 
