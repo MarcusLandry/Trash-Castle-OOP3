@@ -2,7 +2,9 @@
 
 public class Queen : Card
 {
-    public Queen(Suit suit) : base(CardType.Queen, suit, null) { }
+    public Queen(Suit suit) : base(CardType.Queen, suit, null) 
+    { 
+    }
 
     public override bool PerformSpecialAction(GameState gameState)
     {
