@@ -2,16 +2,11 @@
 
 public class Jack : Card
 {
-    public static string rank = 11;
-    public string suit;
-    public static int damage = 2;
-    public Jack()
-	{
+   public Jack(Suit suit) : base(CardType.Jack, suit, null) { }
 
-	}
-
-    public void ability()
+    public override bool PerformSpecialAction(GameState gameState)
     {
-
+        // Define Jack's special ability
+        return true;
     }
 }

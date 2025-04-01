@@ -2,16 +2,11 @@
 
 public class Ace : Card
 {
-    public static string rank = 1;
-    public string suit;
-    public int damage;
+    public AceCard(Suit suit) : base(CardType.Ace, suit, null) { }
 
-    public Ace()
-	{
-	}
-
-    public int ability()
+    public override bool PerformSpecialAction(GameState gameState)
     {
-
+        // Define Ace's special ability
+        return true;
     }
 }

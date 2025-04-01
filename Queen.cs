@@ -2,16 +2,11 @@
 
 public class Queen : Card
 {
-    public static string rank = 12;
-    public string suit;
-    public static int damage = 4;
+    public Queen(Suit suit) : base(CardType.Queen, suit, null) { }
 
-    public Queen()
-	{
-	}
-
-    public void ability()
+    public override bool PerformSpecialAction(GameState gameState)
     {
-
+        // Define Queen's special ability
+        return true;
     }
 }

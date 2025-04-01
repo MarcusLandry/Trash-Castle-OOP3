@@ -2,16 +2,11 @@
 
 public class King : Card
 {
-	public static string rank = 13;
-	public string suit;
-	public static int damage = 2;
-	
-	public King()
-	{
-	}
+	 public King(Suit suit) : base(CardType.King, suit, null) { }
 
-	public void ability()
-	{
-
-	} 
+    public override bool PerformSpecialAction(GameState gameState)
+    {
+        // Define King's special ability
+        return true;
+    }
 }

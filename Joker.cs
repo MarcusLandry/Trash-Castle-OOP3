@@ -2,16 +2,11 @@
 
 public class Joker : Card
 {
-    public static string rank = 14;
-    public string suit;
-    public static int damage = 7;
+    public Joker() : base(CardType.Joker, null, null) { }
 
-    public Joker()
-	{
-	}
-
-    public void ability()
+    public override bool PerformSpecialAction(GameState gameState)
     {
-
+        // Define Joker’s special ability
+        return true;
     }
 }
