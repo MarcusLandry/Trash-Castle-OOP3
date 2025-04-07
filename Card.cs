@@ -33,8 +33,7 @@ using System.Collections.Generic;
         public int? Value { get; protected set; } // Nullable because special cards might not have a numeric value
         public string Name { get; protected set; }
         public bool IsSpecialCard { get; protected set; }
-
-        /* public int Damage {protected set;} */
+        public int Damage {protected set;}
 
         // Constructor
         protected Card(CardType type, Suit? suit, int? value)
@@ -43,15 +42,14 @@ using System.Collections.Generic;
             CardSuit = suit;
             Value = value;
             IsSpecialCard = type != CardType.Number;
-
-           /*  Damage = 0;
-
+            Damage = 0;
+            
+            // Calculates damage of numbered cards
             if (Type == CardType.Number && Value.HasValue)
             {
                 // According to game rules: lower cards (2-5) deal 2 damage, higher cards (6-10) deal 4 damage
                 Damage = Value.Value <= 5 ? 2 : 4;
-            } */
-
+            }
 
             GenerateName();
         }
@@ -89,23 +87,6 @@ using System.Collections.Generic;
         }
 
         // Methods that can be overridden by specific card types
-        
-        /// <summary>
-        /// Gets the damage value of the card for the Battle Phase
-        /// </summary>
-        /// <returns>The amount of damage this card deals</returns>
-        public virtual int GetDamageValue()
-        {
-            // Base implementation for number cards
-            if (Type == CardType.Number && Value.HasValue)
-            {
-                // According to game rules: lower cards (2-5) deal 2 damage, higher cards (6-10) deal 4 damage
-                return Value.Value <= 5 ? 2 : 4;
-            }
-            
-            // Default value for special cards - to be overridden
-            return 0;
-        }
 
         /// <summary>
         /// Abstract method to be implemented by each card type to define its special action
