@@ -16,7 +16,6 @@ public class King : Card
 
         bonusCard.damage += 5;
 
-        return true;
-        return true;
+        return bonusCard;
     }
 }
