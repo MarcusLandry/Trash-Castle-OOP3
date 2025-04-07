@@ -1,19 +1,33 @@
-using system;
+using System;
 using System.Collections.Generic;
+using UnityEngine.Rendering;
+
 public class GameState
 {
-    public Deck Deck { get; set; }
-    public List<Card> { get; set; }
+    
+    public Deck MainDeck { get; private set; }
+    public List<Card> DiscardPile { get; private set; }
 
-    public GameState()
+    public Phase CurrentPhase { get; set; }
+
+    public enum Phase
     {
-        Deck = new Deck();
+        Draw,
+        Collection,
+        Battle
+    }
+
+    public GameState(Deck deck)
+    {
+        MainDeck = deck;
         DiscardPile = new List<Card>();
+        CurrentPhase = Phase.Draw;
     }
 
-    public Card DrawCard()
+    public void Discard(Card card)
     {
-        return Deck.DrawCard();
+        DiscardPile.Add(card);
     }
 
+    // Maybe a method to transition phases, track victory, etc.
 }
