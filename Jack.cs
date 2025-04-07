@@ -6,7 +6,17 @@ public class Jack : Card
 
     public override bool PerformSpecialAction(GameState gameState)
     {
-        // Define Jack's special ability
+
+        Card bonusCard = gameState.DrawCard();
+
+        if (bonusCard == null)
+        {
+            // no card drawn
+            return false;
+        }
+
+        bonusCard.damage += 5;
+
         return true;
     }
 }

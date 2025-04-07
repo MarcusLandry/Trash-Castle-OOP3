@@ -6,6 +6,17 @@ public class King : Card
 
     public override bool PerformSpecialAction(GameState gameState)
     {		
+        Card bonusCard = gameState.DrawCard();
+
+        if (bonusCard == null)
+        {
+            // no card drawn
+            return false;
+        }
+
+        bonusCard.damage += 5;
+
+        return true;
         return true;
     }
 }
