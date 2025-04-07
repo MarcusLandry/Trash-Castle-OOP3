@@ -23,7 +23,7 @@ public class DeckManager : MonoBehaviour
 
     public Card DrawCard()
     {
-        Card drawn = deck.Draw();
+        Card drawn = deck.DrawCard();
         if (drawn != null)
         {
             Debug.Log("Drew card: " + drawn);
@@ -36,9 +36,4 @@ public class DeckManager : MonoBehaviour
         return drawn;
     }
 
-    public void ReturnCard(Card card)
-    {
-        deck.ReturnToDeck(card);
-        deck.Shuffle();
-    }
 }
