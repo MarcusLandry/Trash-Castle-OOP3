@@ -24,7 +24,7 @@ using System.Linq;
         {
             PlayerName = playerName;
             IsAI = isAI;
-            CastleHealth = 100; // Default health of the castle
+            CastleHealth = 50; // Default health of the castle
             Cards = new List<Card>();
         }
         

@@ -10,6 +10,9 @@ public class Queen : Card
     public override bool PerformSpecialAction(GameState gameState)
     {
         // Define Queen's special ability
+        Hand currentPlayer = gameState.CurrentPlayer;
+
+        currentPlayer.Castle += 5;
         return true;
     }
 }
