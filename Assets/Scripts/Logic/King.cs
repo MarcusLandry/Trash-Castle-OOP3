@@ -12,22 +12,20 @@ public class King : Card
         Hand currentPlayer = gameState.CurrentPlayer
 
         // Discard the King (already in hand or just drawn)
-        currentPlayer.DiscardCard(this);
+        currentPlayer.RemoveCard(this);
 
         // Draw another card immediately
-        Card bonusCard = gameState.DrawCard();
+        Card bonusCard = Deck.DrawCard();
         if (bonusCard != null)
         {
-            currentPlayer.AddToHand(bonusCard);
+            bonusCard.Damage += 5;
+            currentPlayer.AddCard(bonusCard);
 
-            int totalDamage = this.Damage + 5 + bonusCard.GetDamageValue();
-            gameState.DealDamage(opponent, totalDamage);
-
-            Debug.Log($"King used Royal Fortune! Drew {bonusCard.Name} and dealt {totalDamage} total damage.");
+            Debug.Log($"King used Royal Fortune! Drew {bonusCard.Name} and dealt {bonusCard.Damage} total damage.");
             return true;
         }
 
-        // If no card could be drawn, still deal only 2 damage
+        // If no card could be drawn, the king has no effect
         Debug.Log("King used Royal Fortune, but no card to draw. The King is useless!");
         return true;
     }

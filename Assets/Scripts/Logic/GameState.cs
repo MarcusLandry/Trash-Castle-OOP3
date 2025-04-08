@@ -73,7 +73,7 @@ public class GameState
     {
         return Players.Where(p => p != currentPlayer && p.CastleHealth > 0).ToList();
     }
-
+    
     /// <summary>
     /// selects a random opponent from current players
     /// </summary>
