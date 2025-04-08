@@ -9,30 +9,23 @@ using System.Linq;
     /// </summary>
     public class Hand
     {
-        // The maximum number of cards a player can hold
-        private readonly int _maxHandSize;
-        
-        // The collection of cards in the player's hand
-        private List<Card> _cards;
-        
-        /// <summary>
-        /// Gets the number of cards currently in the hand
-        /// </summary>
-        public int CardCount => _cards.Count;
+        public string PlayerName { get; private set; }
+
+        // defines if a hand belongs to the user or AI
+        public bool IsAI { get; private set; }
+        public int Castle { get; set; }
+        public List<Card> Cards { get; private set; }
         
         /// <summary>
-        /// Gets a read-only view of the cards in the hand
-        /// </summary>
-        public IReadOnlyList<Card> Cards => _cards.AsReadOnly();
-        
-        /// <summary>
-        /// Initializes a new instance of the Hand class with the specified maximum hand size
+        /// Initializes a new instance of the Hand class 
         /// </summary>
         /// <param name="maxHandSize">The maximum number of cards this hand can hold</param>
-        public Hand(int maxHandSize = 10)
+        public Hand(string playerName, bool isAI = false)
         {
-            _maxHandSize = maxHandSize;
-            _cards = new List<Card>();
+            PlayerName = playerName;
+            IsAI = isAI;
+            CastleHealth = 100; // Default health of the castle
+            Cards = new List<Card>();
         }
         
         /// <summary>
@@ -40,67 +33,22 @@ using System.Linq;
         /// </summary>
         /// <param name="card">The card to add</param>
         /// <returns>True if the card was added successfully, false if the hand is full</returns>
-        public bool AddCard(Card card)
+        public void AddCard(Card card)
         {
-            if (card == null)
-            {
-                throw new ArgumentNullException(nameof(card), "Cannot add a null card to hand");
-            }
-            
-            if (_cards.Count >= _maxHandSize)
-            {
-                return false; // Hand is full
-            }
-            
-            _cards.Add(card);
-            return true;
+            Cards.Add(card);
+            Debug.Log($"{PlayerName} added {card.Name} to their hand.");
         }
-        
-        /// <summary>
-        /// Adds multiple cards to the hand, up to the maximum hand size
-        /// </summary>
-        /// <param name="cards">The cards to add</param>
-        /// <returns>The number of cards that were successfully added</returns>
-        public int AddCards(IEnumerable<Card> cards)
-        {
-            if (cards == null)
-            {
-                throw new ArgumentNullException(nameof(cards), "Cannot add null cards to hand");
-            }
-            
-            int addedCount = 0;
-            
-            foreach (var card in cards)
-            {
-                if (AddCard(card))
-                {
-                    addedCount++;
-                }
-                else
-                {
-                    break; // Stop if the hand becomes full
-                }
-            }
-            
-            return addedCount;
-        }
-        
+
         /// <summary>
         /// Removes a card from the hand by index
         /// </summary>
         /// <param name="index">The index of the card to remove</param>
         /// <returns>The removed card</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if the index is out of range</exception>
-        public Card RemoveCardAt(int index)
+        public void RemoveCard(Card card)
         {
-            if (index < 0 || index >= _cards.Count)
-            {
-                throw new ArgumentOutOfRangeException(nameof(index), "Card index is out of range");
-            }
-            
-            Card card = _cards[index];
-            _cards.RemoveAt(index);
-            return card;
+            Cards.Remove(card);
+            Debug.Log($"{PlayerName} removed {card.Name} from their hand.");
         }
         
         /// <summary>
@@ -137,16 +85,6 @@ using System.Linq;
         public bool HasCard(Card card)
         {
             return _cards.Contains(card);
-        }
-        
-        /// <summary>
-        /// Checks if the hand contains a card of a specific type
-        /// </summary>
-        /// <param name="cardType">The type of card to check for</param>
-        /// <returns>True if the hand contains a card of the specified type, false otherwise</returns>
-        public bool HasCardOfType(Card.CardType cardType)
-        {
-            return _cards.Any(card => card.Type == cardType);
         }
         
         /// <summary>
@@ -194,39 +132,6 @@ using System.Linq;
             return RemoveCardAt(index);
         }
         
-        /// <summary>
-        /// Plays a card of a specific type if available
-        /// </summary>
-        /// <param name="cardType">The type of card to play</param>
-        /// <returns>The played card, or null if no card of that type is in the hand</returns>
-        public Card PlayCardOfType(Card.CardType cardType)
-        {
-            Card card = _cards.FirstOrDefault(c => c.Type == cardType);
-            
-            if (card != null)
-            {
-                RemoveCard(card);
-            }
-            
-            return card;
-        }
-        
-        /// <summary>
-        /// Plays a number card with the specified value if available
-        /// </summary>
-        /// <param name="value">The value of the number card to play</param>
-        /// <returns>The played card, or null if no card with that value is in the hand</returns>
-        public Card PlayNumberCard(int value)
-        {
-            Card card = _cards.FirstOrDefault(c => c.Type == Card.CardType.Number && c.Value == value);
-            
-            if (card != null)
-            {
-                RemoveCard(card);
-            }
-            
-            return card;
-        }
         
         /// <summary>
         /// Clears all cards from the hand
@@ -239,17 +144,4 @@ using System.Linq;
             return cards;
         }
         
-        /// <summary>
-        /// Returns a string representation of the hand
-        /// </summary>
-        /// <returns>A string describing the cards in the hand</returns>
-        public override string ToString()
-        {
-            if (_cards.Count == 0)
-            {
-                return "Empty hand";
-            }
-            
-            return string.Join(", ", _cards.Select(card => card.ToString()));
-        }
     }
