@@ -10,7 +10,7 @@ public class Ace : Card
     public override bool PerformSpecialAction(GameState gameState)
     {
         // Define Ace's special ability
-        int cardAmount = GameState.CurrentPlayer.Cards.Count;
+        int cardAmount = gameState.CurrentPlayer.Cards.Count;
         this.Damage = cardAmount * Damage;
         return true;
     }

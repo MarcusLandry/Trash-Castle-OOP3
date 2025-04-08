@@ -11,28 +11,28 @@ public class Jack : Card
     public override bool PerformSpecialAction(GameState gameState)
     {
         Hand currentPlayer = gameState.CurrentPlayer;
-        opponent = gameState.GetRandomOpponent(currentPlayer);
+        Hand opponent = gameState.GetRandomOpponent(currentPlayer);
 
         if (opponent == null)
         {
-            Debug.LogWarning("Jack tried to steal but no valid opponents.");
+            // Debug.LogWarning("Jack tried to steal but no valid opponents.");
             return false;
         }
 
         if (opponent.Cards.Count == 0)
         {
-            Debug.Log($"{targetOpponent.PlayerName} has no cards to steal.");
+            Debug.Log($"{opponent.PlayerName} has no cards to steal.");
             return false;
         }
 
         // Steal a random card
-        int randomCardIndex = UnityEngine.Random.Range(0, targetOpponent.Cards.Count);
-        Card stolenCard = targetOpponent.Cards[randomCardIndex];
+        int randomCardIndex = UnityEngine.Random.Range(0, opponent.Cards.Count);
+        Card stolenCard = opponent.Cards[randomCardIndex];
 
-        targetOpponent.RemoveCard(stolenCard);
+        opponent.RemoveCard(stolenCard);
         currentPlayer.AddCard(stolenCard);
 
-        Debug.Log($"{currentPlayer.PlayerName} used Jack to steal {stolenCard.Name} from {targetOpponent.PlayerName}.");
+        // Debug.Log($"{currentPlayer.PlayerName} used Jack to steal {stolenCard.Name} from {opponent.PlayerName}.");
 
         return true;
     }
