@@ -1,4 +1,5 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -9,6 +10,8 @@ public class GameState
 {
     public Deck Deck { get; private set; }
     public List<Hand> Players { get; private set; }
+
+    public List<Card> DiscardPile { get; private set; } = new List<Card>();
 
     private int currentPlayerIndex = 0;
 
@@ -67,11 +70,32 @@ public class GameState
     }
 
     /// <summary>
+    /// Deals damage to a player's castle and logs the result.
+    /// </summary>
+    /// <param name="target">The player taking damage</param>
+    /// <param name="amount">Amount of damage to deal</param>
+    public void DealDamage(Hand target, int amount)
+    {
+        int previousHP = target.Castle;
+        target.Castle -= amount;
+        if (target.Castle < 0)
+            target.Castle = 0;
+
+        // Debug.Log($"{target.PlayerName} took {amount} damage! Castle: {previousHP} → {target.Castle}");
+
+        // Optional: trigger defeat state
+        if (target.Castle == 0)
+        {
+            // Debug.Log($"{target.PlayerName}'s castle has been destroyed!");
+        }
+    }
+
+    /// <summary>
     /// gets a list of all active players excluding the current player
     /// </summary>
     public List<Hand> GetOpponents(Hand currentPlayer)
     {
-        return Players.Where(p => p != currentPlayer && p.CastleHealth > 0).ToList();
+        return Players.Where(p => p != currentPlayer && p.Castle > 0).ToList();
     }
     
     /// <summary>
@@ -79,7 +103,7 @@ public class GameState
     /// </summary>
     public Hand GetRandomOpponent(Hand currentPlayer)
     {
-        List<Hand> opponents = GetOpponents();
+        List<Hand> opponents = GetOpponents(currentPlayer);
 
         if (opponents.Count == 0)
         {

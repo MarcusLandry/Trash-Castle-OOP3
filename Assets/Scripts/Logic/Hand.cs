@@ -79,7 +79,7 @@ using System.Linq;
         /// <param name="card">The card to check for</param>
         /// <returns>True if the hand contains the card, false otherwise</returns>
         public bool HasCard(Card card)
-        {
+        { 
             return Cards.Contains(card);
         }
         

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class Deck
 {
-    private List<Card> cards;
+    public List<Card> cards;
     private Random rng = new Random();
 
     /// <summary>
@@ -36,8 +36,7 @@ public class Deck
             cards.Add(new Ace(suit));
         }
 
-        // Add Jokers (assuming 2 in a deck)
-        cards.Add(new Joker());
+        // Add Joker (only one because Joker is OP)
         cards.Add(new Joker());
     }
 

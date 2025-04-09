@@ -8,6 +8,7 @@ public class NumberCard : Card
 
     public override bool PerformSpecialAction(GameState gameState)
     {
+        // NumberCard's don't have special actions
         return false;
     }
 }

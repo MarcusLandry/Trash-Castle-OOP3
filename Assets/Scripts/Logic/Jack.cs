@@ -21,7 +21,7 @@ public class Jack : Card
 
         if (opponent.Cards.Count == 0)
         {
-            Debug.Log($"{opponent.PlayerName} has no cards to steal.");
+            // Debug.Log($"{opponent.PlayerName} has no cards to steal.");
             return false;
         }
 
