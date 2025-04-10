@@ -17,9 +17,17 @@ public class PlayerHandManager : MonoBehaviour
 
     private List<GameObject> cardHand = new();
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space)) DrawCard();
+    }
+
     private void DrawCard()
     {
-        
+        if(cardHand.Count >= maxHandSize) return;
+        GameObject g = Instantiate(cardPrefab, spawnPoint.position, spawnPoint.rotation);
+        cardHand.Add(g);
+        UpdateCardPosition();
     }
 
     private void UpdateCardPosition()

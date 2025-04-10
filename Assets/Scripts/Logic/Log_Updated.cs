@@ -1,7 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
+using UnityEngine;
+
+[Serializable]
+public class LogWrapper
+{
+    public List<string> logs;
+}
 
 public class Log
 {
@@ -24,10 +29,10 @@ public class Log
 
     public void PrintAllLogs()
     {
-        Console.WriteLine("--- Game History ---");
+        Debug.Log("--- Game History ---");
         foreach (var log in logs)
         {
-            Console.WriteLine(log);
+            Debug.Log(log);
         }
     }
 
@@ -44,15 +49,18 @@ public class Log
 
     private void SaveLogsToFile()
     {
-        File.WriteAllText(logFilePath, JsonSerializer.Serialize(logs));
+        LogWrapper wrapper = new LogWrapper { logs = logs };
+        string json = JsonUtility.ToJson(wrapper);
+        System.IO.File.WriteAllText(logFilePath, json);
     }
 
     private void LoadLogsFromFile()
     {
-        if (File.Exists(logFilePath))
+        if (System.IO.File.Exists(logFilePath))
         {
-            string json = File.ReadAllText(logFilePath);
-            logs = JsonSerializer.Deserialize<List<string>>(json) ?? new List<string>();
+            string json = System.IO.File.ReadAllText(logFilePath);
+            LogWrapper wrapper = JsonUtility.FromJson<LogWrapper>(json);
+            logs = wrapper.logs ?? new List<string>();
         }
     }
-} 
+}
