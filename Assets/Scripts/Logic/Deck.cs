@@ -10,7 +10,7 @@ public class DeckWrapper
 
 public class Deck
 {
-    private List<Card> cards;
+    public List<Card> cards;
     private System.Random rng = new System.Random();
 
     // Constructor initializes the deck and shuffles it for randomness.

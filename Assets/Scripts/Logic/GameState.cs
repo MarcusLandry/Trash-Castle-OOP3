@@ -151,7 +151,7 @@ public class GameState
         }
             
 
-        int index = Random.Range(0, opponents.Count);
+        int index = UnityEngine.Random.Range(0, opponents.Count);
         return opponents[index];
     }
 
@@ -186,7 +186,7 @@ public class GameState
         {
             string json = System.IO.File.ReadAllText(filePath);
             GameStateWrapper wrapper = JsonUtility.FromJson<GameStateWrapper>(json);
-            MainDeck = wrapper.MainDeck;
+            Deck = wrapper.Deck;
             DiscardPile = wrapper.DiscardPile ?? new List<Card>();
         }
     }
