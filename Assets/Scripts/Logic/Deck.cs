@@ -35,7 +35,8 @@ public class Deck
             cards.Add(new King(suit));
             cards.Add(new Ace(suit));
         }
-        cards.Add(new Joker());
+
+        // Add Joker (only one because Joker is OP)
         cards.Add(new Joker());
     }
 

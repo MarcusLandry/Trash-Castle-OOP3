@@ -33,7 +33,7 @@ using System.Collections.Generic;
         public int? Value { get; protected set; } // Nullable because special cards might not have a numeric value
         public string Name { get; protected set; }
         public bool IsSpecialCard { get; protected set; }
-        public int Damage { get; protected set;}
+        public int Damage { get; set;}
 
         // Constructor
         protected Card(CardType type, Suit? suit, int? value)
