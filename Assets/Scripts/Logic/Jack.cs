@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using Unity;
 
 public class Jack : Card
@@ -15,13 +16,13 @@ public class Jack : Card
 
         if (opponent == null)
         {
-            // Debug.LogWarning("Jack tried to steal but no valid opponents.");
+            Debug.LogWarning("Jack tried to steal but no valid opponents.");
             return false;
         }
 
         if (opponent.Cards.Count == 0)
         {
-            // Debug.Log($"{opponent.PlayerName} has no cards to steal.");
+            Debug.Log($"{opponent.PlayerName} has no cards to steal.");
             return false;
         }
 

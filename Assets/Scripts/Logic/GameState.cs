@@ -45,6 +45,37 @@ public class GameState
         }
     }
 
+    public void AutoFillCollection(Hand player)
+    {
+        while (player.CollectionGrid.Count < 9) // 2–10 = 9 cards
+        {
+            Card card = Deck.DrawCard();
+            if (card == null)
+            {
+                Debug.Log("Deck is empty.");
+                break;
+            }
+
+            // Only keep number cards the player doesn't already have
+            if (card.Type == Card.CardType.Number && card.Value.HasValue)
+            {
+                if (!player.HasNumberInCollection(card.Value.Value))
+                {
+                    player.AddToCollection(card);
+                }
+                else
+                {
+                    Debug.Log($"Duplicate number {card.Value.Value} discarded.");
+                }
+            }
+            else
+            {
+                Debug.Log($"Special card {card.Name} drawn — not added to collection grid.");
+                player.AddCard(card); // Or discard it, or queue it for Battle Phase
+            }
+        }
+    }
+
     /// <summary>
     /// Draws a card for the current player.
     /// </summary>
@@ -86,7 +117,7 @@ public class GameState
         // Optional: trigger defeat state
         if (target.Castle == 0)
         {
-            // Debug.Log($"{target.PlayerName}'s castle has been destroyed!");
+            Debug.Log($"{target.PlayerName}'s castle has been destroyed!");
         }
     }
 

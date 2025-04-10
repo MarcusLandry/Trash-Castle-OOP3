@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,7 +18,7 @@ public class Joker : Card
 
             if (cardsToReplace.Count == 0)
             {
-                // Debug.Log($"{player.PlayerName} has no cards in their grid to reshuffle.");
+                Debug.Log($"{player.PlayerName} has no cards in their grid to reshuffle.");
                 continue;
             }
 
@@ -29,7 +30,7 @@ public class Joker : Card
             }
 
             gameState.Deck.Shuffle();
-            //Debug.Log($"{player.PlayerName}'s collection grid was cleared. Drawing {cardsToReplace} new cards.");
+            Debug.Log($"{player.PlayerName}'s collection grid was cleared. Drawing {cardsToReplace} new cards.");
 
             for (int i = 0; i < cardsToReplace.Count; i++)
             {

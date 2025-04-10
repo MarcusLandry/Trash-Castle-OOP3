@@ -1,12 +1,14 @@
 using System;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using static Card;
 
 
-    /// <summary>
-    /// Represents a player's hand of cards in the Trash Castle game.
-    /// Manages the cards a player currently holds and provides methods to add, remove, and play cards.
-    /// </summary>
+/// <summary>
+/// Represents a player's hand of cards in the Trash Castle game.
+/// Manages the cards a player currently holds and provides methods to add, remove, and play cards.
+/// </summary>
     public class Hand
     {
         public string PlayerName { get; private set; }
@@ -15,11 +17,13 @@ using System.Linq;
         public bool IsAI { get; private set; }
         public int Castle { get; set; }
         public List<Card> Cards { get; private set; }
-        
-        /// <summary>
-        /// Initializes a new instance of the Hand class 
-        /// </summary>
-        /// <param name="maxHandSize">The maximum number of cards this hand can hold</param>
+        // 2-10 grid of cards
+        public List<Card> CollectionGrid { get; private set; } = new List<Card>();
+
+    /// <summary>
+    /// Initializes a new instance of the Hand class 
+    /// </summary>
+    /// <param name="maxHandSize">The maximum number of cards this hand can hold</param>
         public Hand(string playerName, bool isAI = false)
         {
             PlayerName = playerName;
@@ -27,13 +31,44 @@ using System.Linq;
             Castle = 50; // Default health of the castle
             Cards = new List<Card>();
         }
-        
-        /// <summary>
-        /// Adds a card to the hand if there is room
-        /// </summary>
-        /// <param name="card">The card to add</param>
-        /// <returns>True if the card was added successfully, false if the hand is full</returns>
-        public void AddCard(Card card)
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public bool HasNumberInCollection(int value)
+    {
+        return CollectionGrid.Any(c => c.Value == value);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="card"></param>
+    public void AddToCollection(Card card)
+    {
+        if (card.Type == CardType.Number && card.Value.HasValue)
+        {
+            if (!HasNumberInCollection(card.Value.Value))
+            {
+                CollectionGrid.Add(card);
+                Debug.Log($"{PlayerName} added {card.Name} to their collection grid.");
+            }
+            else
+            {
+                Debug.Log($"{PlayerName} already has number {card.Value} in their collection. Card discarded.");
+                // You can discard or handle it however you'd like here
+            }
+        }
+    }
+
+    /// <summary>
+    /// Adds a card to the hand if there is room
+    /// </summary>
+    /// <param name="card">The card to add</param>
+    /// <returns>True if the card was added successfully, false if the hand is full</returns>
+    public void AddCard(Card card)
         {
             Cards.Add(card);
         }
