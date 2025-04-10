@@ -2,7 +2,10 @@
 
 public class King : Card
 {
-	 public King(Suit suit) : base(CardType.King, suit, null) { }
+public King(Suit suit) : base(CardType.King, suit, null) { }
 
-    public override bool PerformSpecialAction(GameState gameState) { }
+public override bool PerformSpecialAction(GameState gameState) 
+{
+    return true; // Placeholder logic
+}
 }

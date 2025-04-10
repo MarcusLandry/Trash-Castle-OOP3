@@ -11,8 +11,9 @@ public class DeckWrapper
 public class Deck
 {
     private List<Card> cards;
-private System.Random rng = new System.Random();
+    private System.Random rng = new System.Random();
 
+    // Constructor initializes the deck and shuffles it for randomness.
     public Deck()
     {
         cards = new List<Card>();
@@ -20,6 +21,7 @@ private System.Random rng = new System.Random();
         Shuffle();
     }
 
+    // Populates the deck with a full set of cards, ensuring all types are available for gameplay.
     private void InitializeDeck()
     {
         foreach (Card.Suit suit in Enum.GetValues(typeof(Card.Suit)))
@@ -37,6 +39,7 @@ private System.Random rng = new System.Random();
         cards.Add(new Joker());
     }
 
+    // Shuffles the deck to ensure fair gameplay by randomizing card order.
     public void Shuffle()
     {
         int n = cards.Count;
@@ -47,6 +50,7 @@ private System.Random rng = new System.Random();
         }
     }
 
+    // Draws a card from the deck for the player to use during their turn.
     public Card DrawCard()
     {
         if (cards.Count == 0)
@@ -58,6 +62,7 @@ private System.Random rng = new System.Random();
         return drawnCard;
     }
 
+    // Resets the deck for a new game by clearing and reinitializing it.
     public void ResetDeck()
     {
         cards.Clear();
@@ -65,11 +70,13 @@ private System.Random rng = new System.Random();
         Shuffle();
     }
 
+    // Returns the number of cards remaining in the deck, useful for game logic.
     public int CardsRemaining()
     {
         return cards.Count;
     }
 
+    // Saves the current state of the deck to a file for persistence.
     public void SaveDeckToFile(string filePath)
     {
         DeckWrapper wrapper = new DeckWrapper { cards = cards };
@@ -77,6 +84,7 @@ private System.Random rng = new System.Random();
         System.IO.File.WriteAllText(filePath, json);
     }
 
+    // Loads the deck state from a file, allowing players to resume from a saved game.
     public void LoadDeckFromFile(string filePath)
     {
         if (System.IO.File.Exists(filePath))
