@@ -1,14 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using static Card;
 
+[Serializable]
+public class HandWrapper
+{
+    public List<Card> cards;
+}
 
 /// <summary>
 /// Represents a player's hand of cards in the Trash Castle game.
 /// Manages the cards a player currently holds and provides methods to add, remove, and play cards.
 /// </summary>
-    public class Hand
+public class Hand
     {
         public string PlayerName { get; private set; }
 
@@ -18,8 +24,8 @@ using static Card;
         public List<Card> Cards { get; private set; }
         // 2-10 grid of cards
         public List<Card> CollectionGrid { get; private set; } = new List<Card>();
-        public int CardCount => _cards.Count;
-        public IReadOnlyList<Card> Cards => _cards.AsReadOnly();
+        public int CardCount => Cards.Count;
+        public IReadOnlyList<Card> CardsRO => Cards.AsReadOnly();
 
     /// <summary>
     /// Initializes a new instance of the Hand class 
@@ -85,6 +91,18 @@ using static Card;
             Cards.Remove(card);
         }
 
+        public Card RemoveCardAt(int index)
+        {
+        if (index < 0 || index >= Cards.Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), "Card index is out of range");
+            }
+
+            Card card = Cards[index];
+            Cards.RemoveAt(index);
+            return card;
+        }
+
 
         public int TakeDamage(Card card) 
         {
@@ -118,13 +136,19 @@ using static Card;
         { 
             return Cards.Contains(card);
         }
-        
-        /// <summary>
-        /// Checks if the hand contains a number card with the specified value
-        /// </summary>
-        /// <param name="value">The value to check for</param>
-        /// <returns>True if the hand contains a number card with the specified value, false otherwise</returns>
-        public bool HasNumberCard(int value)
+
+    // Checks if the hand contains a card of a specific type, aiding in strategic gameplay.
+        public bool HasCardOfType(Card.CardType cardType)
+        {
+            return Cards.Any(card => card.Type == cardType);
+        }
+
+    /// <summary>
+    /// Checks if the hand contains a number card with the specified value
+    /// </summary>
+    /// <param name="value">The value to check for</param>
+    /// <returns>True if the hand contains a number card with the specified value, false otherwise</returns>
+    public bool HasNumberCard(int value)
         {
             return Cards.Any(card => card.Type == Card.CardType.Number && card.Value == value);
         }
@@ -161,12 +185,12 @@ using static Card;
             // Returns a string representation of the hand, useful for debugging and display.
         public override string ToString()
         {
-            if (_cards.Count == 0)
+            if (Cards.Count == 0)
             {
                 return "Empty hand";
             }
 
-            return string.Join(", ", _cards.Select(card => card.ToString()));
+            return string.Join(", ", Cards.Select(card => card.ToString()));
         }
 
         // Saves the current state of the hand to a file for persistence.
@@ -184,7 +208,7 @@ using static Card;
             {
                 string json = System.IO.File.ReadAllText(filePath);
                 HandWrapper wrapper = JsonUtility.FromJson<HandWrapper>(json);
-                _cards = wrapper.cards ?? new List<Card>();
+                Cards = wrapper.cards ?? new List<Card>();
             }
         }
         
